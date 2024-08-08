@@ -18,9 +18,15 @@ import { getData } from "../../services/axiosrequests";
 import { Badge } from "@mui/material";
 import { addUser, updateNotification } from "../../Reducer/profile";
 import { handleLogout } from "../../pages/Authentication/logout/Hanldelogout";
+import userT from "../../types/userT";
 
-const pages: any = [];
-const settings = [
+interface settingsT {
+  name: string;
+  path: string;
+  onclick: any;
+}
+
+const settings: settingsT[] = [
   { name: "Profile", path: "/profile", onclick: null },
   { name: "Logout", path: "/signin", onclick: handleLogout },
 ];
@@ -62,7 +68,7 @@ function ResponsiveAppBar() {
     fetchMyAPI();
   }, []);
 
-  let storedata = useSelector((state: { user: any }) => state.user);
+  let storedata = useSelector((state: { user: { text: userT } }) => state.user);
 
   React.useEffect(() => {
     if (storedata?.text?.pk != undefined) {
@@ -138,27 +144,11 @@ function ResponsiveAppBar() {
               sx={{
                 display: { xs: "block", md: "none" },
               }}
-            >
-              {pages.map((page: any) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            ></Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page: any) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <div className="d-flex">
@@ -206,12 +196,12 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {settings.map((setting: settingsT) => (
                 <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
                   <Link
                     className="link-offset-2 link-underline link-underline-opacity-0 text-dark"
                     to={setting.path}
-                    onClick={setting.onclick as any}
+                    onClick={() => setting.onclick}
                   >
                     {setting.name}
                   </Link>

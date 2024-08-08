@@ -3,8 +3,6 @@ import userT from "../types/userT";
 
 const initialState = {
   user: null,
-  totalQuantity: 0,
-  showCart: false,
 };
 
 export const userSlice = createSlice({
@@ -23,7 +21,6 @@ export const userSlice = createSlice({
       state.user.text.profile.profile_photo = action.payload;
     },
     updateNotification: (state: { user: any }, action) => {
-      console.log(state.user?.text?.notification);
       state.user?.text?.notification.push(action.payload);
     },
   },

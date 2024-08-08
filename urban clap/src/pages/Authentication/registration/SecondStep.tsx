@@ -2,7 +2,7 @@ import React from "react";
 import TextField from "../../../components/common/FormController/TextField";
 import { ErrorMessage, Field } from "formik";
 
-const SecondStep = ({ formik }) => {
+const SecondStep = ({ formik }: any) => {
   return (
     <>
       <TextField

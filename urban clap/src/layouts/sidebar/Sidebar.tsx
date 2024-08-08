@@ -1,18 +1,17 @@
 import "./sidebar.css";
 import Sidebarnavlist from "../../components/sidebar/Sidebarnavlist";
 
-// interface menuT {
-//   link: string;
-//   name: string;
-//   icon_classes: string;
-// }
+interface navT {
+  link: string;
+  name: string;
+  icon_classes: string;
+}
 
 const Sidebar = () => {
-  // const [navList, setNavList] = useState([""]);
-  let setNavList = [""];
+  let setNavList: navT[] = [];
   const user = JSON.parse(localStorage.getItem("creads") || "''");
   if (user.is_superuser) {
-    setNavList: [] = [
+    setNavList = [
       {
         link: "/dashboard",
         name: "Dashboard",
@@ -50,7 +49,7 @@ const Sidebar = () => {
       },
     ];
   } else if (user.is_staff) {
-    setNavList: [] = [
+    setNavList = [
       {
         link: "/dashboard",
         name: "Dashboard",
@@ -78,7 +77,7 @@ const Sidebar = () => {
       },
     ];
   } else {
-    setNavList: [] = [
+    setNavList = [
       {
         link: "/all-services",
         name: "Show Services",

@@ -8,7 +8,7 @@ export const validationschema = [
     contact: Yup.string()
       .required("Contact Required!")
       .matches(
-        "^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$",
+        /^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$/,
         "Contact Number Invalid"
       ),
     profile: Yup.object().shape({
@@ -22,7 +22,7 @@ export const validationschema = [
       .min(8, "Password must be minimum 8 digits!")
       .required("Password Required!"),
     password2: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Password must match!")
+      .oneOf([Yup.ref("password")], "Password must match!")
       .required("Confirm password is reqired!"),
   }),
 ];

@@ -1,7 +1,6 @@
-import React from "react";
 import TextField from "../../../components/common/FormController/TextField";
 
-const Firststep = ({ formik }) => {
+const Firststep = ({ formik }: any) => {
   return (
     <>
       <TextField
@@ -34,7 +33,7 @@ const Firststep = ({ formik }) => {
         type="file"
         name="profile_photo"
         label="Address"
-        onChange={(e) => {
+        onChange={(e: any) => {
           formik.setFieldValue(
             "profile.profile_photo",
             e.currentTarget.files[0]

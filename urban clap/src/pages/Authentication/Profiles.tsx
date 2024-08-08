@@ -5,22 +5,26 @@ import Sidebar from "../../layouts/sidebar/Sidebar";
 import { Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import TextField from "../../components/common/FormController/TextField";
-import { validationschemaUpdateProfile } from "../../Schema/updateprofile";
+// import { validationschemaUpdateProfile } from "../../Schema/updateprofile";
 import { putData } from "../../services/axiosrequests";
 import Swal from "sweetalert2";
 import { updateUser } from "../../Reducer/profile";
 import { useNavigate } from "react-router-dom";
+import userT from "../../types/userT";
+import { validationschemaUpdateProfile } from "../../Schema/updateprofile";
 
 const Profiles = () => {
-  let userReduxData = useSelector((state) => state.user);
+  let userReduxData = useSelector(
+    (state: { user: { text: userT } }) => state.user
+  );
   let [imageUrl, setImageUrl] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const submitData = async (values, actions) => {
+  const submitData = async (values: userT, actions: any) => {
     try {
       const formData = new FormData();
       formData.append("first_name", values.first_name);
-      formData.append("pk", values.pk);
+      formData.append("pk", values.pk as any);
       formData.append("last_name", values.last_name);
       formData.append("username", values.username);
       formData.append("email", values.email);
@@ -29,7 +33,7 @@ const Profiles = () => {
       if (values.profile && values.profile.profile_photo) {
         formData.append("profile.profile_photo", values.profile.profile_photo);
       }
-      let storedata = JSON.parse(localStorage.getItem("creads"));
+      let storedata = JSON.parse(localStorage.getItem("creads") || "''");
       let config = {
         headers: {
           "Content-Type": " multipart/form-data",
@@ -53,7 +57,7 @@ const Profiles = () => {
           navigate("/profile");
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       if (Object.keys(err.response.data.context)) {
         actions.setErrors(err.response.data.context);
       }

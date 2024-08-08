@@ -4,15 +4,15 @@ import TextField from "../../../components/common/FormController/TextField";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link } from "react-router-dom";
 import "./forgetpass.css";
-import { forgotPasswordSchema } from "../../../Schema/forgot";
 import { postData } from "../../../services/axiosrequests";
+import { forgotPasswordSchema } from "../../../Schema/forgot";
 
 const Forgetpassword = () => {
   const [resetLink, setResetLink] = useState(false);
   const [uid, setUid] = useState("");
   const [token, setToken] = useState("");
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = async (values: { username: string }, actions: any) => {
     try {
       const response = await postData(
         `${import.meta.env.VITE_API_URL}forgot-password/`,
@@ -22,7 +22,7 @@ const Forgetpassword = () => {
       setUid(response.context.u_id);
       setToken(response.context.token);
       setResetLink(true);
-    } catch (err) {
+    } catch (err: any) {
       if (Object.keys(err.response.data.context)) {
         actions.setErrors(err.response.data.context);
       }

@@ -8,6 +8,8 @@ export interface IAuth {
 const AuthContext = createContext<IAuth | any>(null);
 
 export const AuthProvider = (props: { children: JSX.Element }) => {
+  const user = localStorage.getItem("creads");
+
   const navigate = useNavigate();
 
   const login = async (user: userT) => {
@@ -25,6 +27,7 @@ export const AuthProvider = (props: { children: JSX.Element }) => {
   const value = useMemo(
     () => ({
       login,
+      user,
     }),
     []
   );

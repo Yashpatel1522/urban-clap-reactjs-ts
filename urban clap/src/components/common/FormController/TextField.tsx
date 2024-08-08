@@ -1,7 +1,7 @@
 import React from "react";
 import { ErrorMessage, useField } from "formik";
 
-type InputProps = {
+export interface InputProps {
   label: string;
   name: string;
   validate?: (value: any) => undefined | string | Promise<any>;
@@ -9,7 +9,12 @@ type InputProps = {
   multiple?: boolean;
   value?: string;
   placeholder?: string;
-};
+  onChange?: any;
+  className?: string;
+  options?: any;
+  id?: string;
+  style?: {};
+}
 
 const TextField = ({ label, ...props }: InputProps) => {
   const [field, meta] = useField(props);

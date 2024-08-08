@@ -5,8 +5,8 @@ import TextField from "../../../components/common/FormController/TextField";
 import "./resetpassword.css";
 import { Link, useLocation } from "react-router-dom";
 import React, { useState } from "react";
-import { resetPasswordSchema } from "../../../Schema/resetpassword";
 import { postData } from "../../../services/axiosrequests";
+import { resetPasswordSchema } from "../../../Schema/resetpassword";
 
 const Resetpassword = () => {
   const [message, setMessage] = useState("");
@@ -15,14 +15,17 @@ const Resetpassword = () => {
   const uid = query.get("uid");
   const token = query.get("token");
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = async (
+    values: { new_password: string; confrim_password: string },
+    actions: any
+  ) => {
     try {
       const response = await postData(
         `${import.meta.env.VITE_API_URL}password_reset_confrim/`,
         { u_id: uid, token: token, new_password: values.new_password }
       );
       setMessage(response.context.message);
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
       if (Object.keys(err.response.data.context)) {
         actions.setErrors(err.response.data.context);

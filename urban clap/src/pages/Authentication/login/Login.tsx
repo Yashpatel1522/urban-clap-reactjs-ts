@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.css";
 import { Formik, Form } from "formik";
 import "./Login.css";
 import { Link } from "react-router-dom";
@@ -9,8 +8,11 @@ import { logiValidationSchema } from "../../../Schema/login";
 
 const Login = () => {
   const { login } = useAuth();
-  const handleSubmit = async (values: any) => {
-    const errorTag: HTMLElement | any = document.getElementById("error");
+  const handleSubmit = async (values: {
+    username: string;
+    password: string;
+  }) => {
+    const errorTag = document.getElementById("error") as HTMLElement;
     try {
       const response = await postData(
         `${import.meta.env.VITE_API_URL}login/`,

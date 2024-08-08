@@ -7,8 +7,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Firststep from "./Firststep";
 import SecondStep from "./SecondStep";
-import { validationschema } from "../../../Schema/registration";
+// import { validationschema } from "../../../Schema/registration";
 import { postData } from "../../../services/axiosrequests";
+import { validationschema } from "../../../Schema/registration";
+import userT from "../../../types/userT";
 
 const steps = ["Step1", "step2"];
 function Registration() {
@@ -17,17 +19,17 @@ function Registration() {
 
   const isLastStep = () => currentStep === steps.length - 1;
 
-  const submitData = async (values, actions) => {
+  const submitData = async (values: userT, actions: any) => {
     const formData = new FormData();
     formData.append("username", values.username);
     formData.append("email", values.email);
     formData.append("first_name", values.first_name);
     formData.append("last_name", values.last_name);
-    formData.append("password", values.password);
-    formData.append("password2", values.password2);
+    formData.append("password", values.password as string);
+    formData.append("password2", values.password2 as string);
     formData.append("contact", values.contact);
     formData.append("address", values.address);
-    formData.append("is_staff", values.is_staff);
+    formData.append("is_staff", values.is_staff as any);
     if (values.profile && values.profile.profile_photo) {
       formData.append("profile.profile_photo", values.profile.profile_photo);
     }
@@ -40,7 +42,7 @@ function Registration() {
           { headers: { "Content-Type": " multipart/form-data" } }
         );
         navigate("/signin");
-      } catch (err) {
+      } catch (err: any) {
         if (Object.keys(err.response.data.context)) {
           actions.setErrors(err.response.data.context);
         }
@@ -114,7 +116,7 @@ function Registration() {
   );
 }
 
-const initialValues = {
+const initialValues: userT = {
   first_name: "",
   last_name: "",
   email: "",
@@ -125,7 +127,7 @@ const initialValues = {
   contact: "",
   is_staff: false,
   profile: {
-    profile_photo: null,
+    profile_photo: "",
   },
 };
 

@@ -39,7 +39,7 @@ export const patchData = async (url: string, data: {}, config = {}) => {
   }
 };
 
-export const deleteData = async (url, config = {}) => {
+export const deleteData = async (url: string, config = {}) => {
   try {
     const response = await axios.delete(url, config);
     return response.data;

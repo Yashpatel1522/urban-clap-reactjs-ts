@@ -1,14 +1,21 @@
 import React from "react";
 import { useField } from "formik";
+import { InputProps } from "./TextField";
 
-const SelectField = ({ label, options, className, multiple, ...props }) => {
+const SelectField = ({
+  label,
+  options,
+  className,
+  multiple,
+  ...props
+}: InputProps) => {
   const [field, meta, helpers] = useField(props);
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const selectedValue = e.target.value;
     if (multiple) {
       const selectedOptions = Array.from(e.target.selectedOptions).map(
-        (option) => option.value
+        (option: any) => option.value
       );
       helpers.setValue(selectedOptions);
     } else {
@@ -16,8 +23,10 @@ const SelectField = ({ label, options, className, multiple, ...props }) => {
     }
   };
 
-  const handleRemoveOption = (optionValue) => {
-    const updatedValue = field.value.filter((value) => value !== optionValue);
+  const handleRemoveOption = (optionValue: any) => {
+    const updatedValue = field.value.filter(
+      (value: any) => value !== optionValue
+    );
     helpers.setValue(updatedValue);
   };
 
@@ -36,7 +45,7 @@ const SelectField = ({ label, options, className, multiple, ...props }) => {
         <option key="" value="">
           select value
         </option>
-        {options?.map((option) => (
+        {options?.map((option: any) => (
           <option key={option.id} value={option.id}>
             {option.name}
           </option>
