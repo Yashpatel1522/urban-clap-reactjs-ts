@@ -105,7 +105,7 @@ const AdminChart = () => {
             className="link-offset-2 link-underline link-underline-opacity-0"
           >
             <div className="card-body my-3 text-dark">
-              <p className="card-text h1">Cetegorys</p>
+              <p className="card-text h1">Categorys</p>
               <h5 className="card-title ">{counts?.c}</h5>
             </div>
           </Link>

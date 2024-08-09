@@ -1,19 +1,22 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getData } from "../../services/axiosrequests";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import "./showservices.css";
 import { Rating } from "@mui/material";
+import Spinner from "../spiner";
 
 const ShowServices = () => {
   const [allServices, setAllServices] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+  const [loader, setLoader] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
 
   const debouncedSearch = useCallback(
     debounce(async (page, query) => {
+      setLoader(false);
       const storedata = JSON.parse(localStorage.getItem("creads") || "");
       const response = await getData(
         `${
@@ -26,6 +29,7 @@ const ShowServices = () => {
       const newrow = response.context?.results.map(convertRow);
       setAllServices(newrow);
       setTotalPage(Math.ceil(response.context.count / 2));
+      setLoader(true);
     }, 500),
     []
   );
@@ -104,110 +108,124 @@ const ShowServices = () => {
           className="form-control"
         />
       </div>
-
-      {allServices.map(
-        (item: {
-          id: number;
-          rating: number;
-          servicedescription: string;
-          price: number;
-          serviceprovider: string;
-          sp_id: number;
-          servicecategory: string;
-          areas: [{ id: number; name: string }];
-          slots: [{ id: number; name: string }];
-        }) => (
-          <div key={item.id} className="service-card">
-            <div className="header">{item.servicedescription}</div>
-            <div className="row">
-              <div className="col-md-6">
-                <strong>Rating:</strong>
+      {loader ? (
+        <>
+          {allServices.map(
+            (item: {
+              id: number;
+              rating: number;
+              servicedescription: string;
+              price: number;
+              serviceprovider: string;
+              sp_id: number;
+              servicecategory: string;
+              areas: [{ id: number; name: string }];
+              slots: [{ id: number; name: string }];
+            }) => (
+              <div key={item.id} className="service-card">
+                <div className="header">{item.servicedescription}</div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <strong>Rating:</strong>
+                  </div>
+                  <div className="col-md-6">
+                    <Rating
+                      value={(item.rating as any) == "" ? 0 : item.rating}
+                      readOnly
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <strong>Price:</strong>
+                  </div>
+                  <div className="col-md-6">{item.price}</div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <strong>Service Provider:</strong>
+                  </div>
+                  <div className="col-md-6">{item.serviceprovider}</div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <strong>Category:</strong>
+                  </div>
+                  <div className="col-md-6">{item.servicecategory}</div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <strong>Slots:</strong>
+                  </div>
+                  <div className="col-md-6">
+                    {item.slots.map((slot) => (
+                      <div key={slot.id}>{slot.name}</div>
+                    ))}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <strong>Areas:</strong>
+                  </div>
+                  <div className="col-md-6">
+                    {item.areas.map((area) => (
+                      <div key={area.id}>{area.name}</div>
+                    ))}
+                  </div>
+                </div>
+                <div className="button-container">
+                  <button
+                    className="button"
+                    onClick={() =>
+                      handleUpdate({
+                        service: item.id,
+                        slot: item.slots,
+                        area: item.areas,
+                        work_date: "",
+                      })
+                    }
+                  >
+                    Book Appointment
+                  </button>
+                  <button
+                    className="button"
+                    onClick={() => handleShowReview({ id: item.id })}
+                  >
+                    Show Reviews
+                  </button>
+                </div>
               </div>
-              <div className="col-md-6">
-                <Rating
-                  value={(item.rating as any) == "" ? 0 : item.rating}
-                  readOnly
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <strong>Price:</strong>
-              </div>
-              <div className="col-md-6">{item.price}</div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <strong>Service Provider:</strong>
-              </div>
-              <div className="col-md-6">{item.serviceprovider}</div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <strong>Category:</strong>
-              </div>
-              <div className="col-md-6">{item.servicecategory}</div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <strong>Slots:</strong>
-              </div>
-              <div className="col-md-6">
-                {item.slots.map((slot) => (
-                  <div key={slot.id}>{slot.name}</div>
-                ))}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <strong>Areas:</strong>
-              </div>
-              <div className="col-md-6">
-                {item.areas.map((area) => (
-                  <div key={area.id}>{area.name}</div>
-                ))}
-              </div>
-            </div>
-            <div className="button-container">
-              <button
-                className="button"
-                onClick={() =>
-                  handleUpdate({
-                    service: item.id,
-                    slot: item.slots,
-                    area: item.areas,
-                    work_date: "",
-                  })
-                }
-              >
-                Book Appointment
-              </button>
-              <button
-                className="button"
-                onClick={() => handleShowReview({ id: item.id })}
-              >
-                Show Reviews
-              </button>
-            </div>
+            )
+          )}
+          <div className="d-flex justify-content-center gap-3 mt-4">
+            <button
+              className="button"
+              onClick={handlePrev}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+            <button
+              className="button"
+              onClick={handleNext}
+              disabled={currentPage === totalPage}
+            >
+              Next
+            </button>
           </div>
-        )
+        </>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "15% auto",
+          }}
+        >
+          {" "}
+          <Spinner />
+        </div>
       )}
-      <div className="d-flex justify-content-center gap-3 mt-4">
-        <button
-          className="button"
-          onClick={handlePrev}
-          disabled={currentPage === 1}
-        >
-          Prev
-        </button>
-        <button
-          className="button"
-          onClick={handleNext}
-          disabled={currentPage === totalPage}
-        >
-          Next
-        </button>
-      </div>
     </div>
   );
 };

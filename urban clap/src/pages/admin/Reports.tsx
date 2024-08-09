@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Formik } from "formik";
 import TextField from "../../components/common/FormController/TextField";
 // import { ReportSchema } from "../../Schema/Reports";
@@ -169,9 +169,7 @@ const Reports = () => {
           </div>
         </>
       ) : (
-        <div className="text-danger text-center fs-3">
-          Data not found!
-        </div>
+        <div className="text-danger text-center fs-3">Data not found!</div>
       )}
     </div>
   );

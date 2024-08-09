@@ -1,17 +1,19 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { deleteData, getData } from "../../services/axiosrequests";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { debounce } from "lodash";
 import { useSelector } from "react-redux";
 import userT from "../../types/userT";
 import servicesT from "../../types/showservices";
+import Spinner from "../spiner";
 
 // import Searching from "./Searching";
 
 const Showservices = () => {
   let [services, setServices] = useState([]);
+  const [loader, setLoader] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
@@ -93,6 +95,7 @@ const Showservices = () => {
 
   const debouncedSearch = useCallback(
     debounce(async (page, query) => {
+      setLoader(false);
       let storedata = JSON.parse(localStorage.getItem("creads") || "''");
       const response = await getData(
         `${
@@ -110,10 +113,10 @@ const Showservices = () => {
       );
       setServices(response.context?.results);
       setTotalPage(Math.ceil(response.context.count / 2));
+      setLoader(true);
     }, 500),
     []
   );
-  // };
 
   const handleInputChange = (event: any) => {
     setInputValue(event.target.value);
@@ -152,7 +155,7 @@ const Showservices = () => {
         </div>
       )}
       <div className="text-center fs-3 mt-2" style={{ fontWeight: "bold" }}>
-        Services
+        Servicesff
       </div>
       <div className="mb-4 mt-3">
         <input
@@ -178,76 +181,90 @@ const Showservices = () => {
           <></>
         )}
       </div>
-
-      {services.length == 0 ? (
-        <div className="fs-3 text-danger col-12 text-center mt-5">
-          No Data Found
-        </div>
-      ) : (
+      {loader ? (
         <>
-          <table style={{ width: "100%", padding: "5px", height: "50%" }}>
-            <tbody>
-              <tr>
-                <th>Id</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Update</th>
-                <th>Delete</th>
-              </tr>
-
-              {services.map((item: servicesT, key) => {
-                return (
-                  <tr key={key}>
-                    <td>{item.id}</td>
-                    <td>{item.description}</td>
-                    <td>{item.price}</td>
-                    <td>
-                      <p
-                        onClick={() =>
-                          handleUpdate({
-                            id: item.id,
-                            category: item.category,
-                            area: item.area,
-                            description: item.description,
-                            price: item.price,
-                            slot: item.slot,
-                          })
-                        }
-                        className="btn btn-primary"
-                      >
-                        Update
-                      </p>
-                    </td>
-                    <td>
-                      <p
-                        className="btn btn-danger"
-                        onClick={() => handleDelete(item.id)}
-                      >
-                        Delete
-                      </p>
-                    </td>
+          {services.length == 0 ? (
+            <div className="fs-3 text-danger col-12 text-center mt-5">
+              No Data Found
+            </div>
+          ) : (
+            <>
+              <table style={{ width: "100%", padding: "5px", height: "50%" }}>
+                <tbody>
+                  <tr>
+                    <th>Id</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Update</th>
+                    <th>Delete</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <div className="d-flex justify-content-center gap-3 mt-4">
-            <button
-              className="button"
-              onClick={handlePrev}
-              disabled={currentPage == 1}
-            >
-              Prev
-            </button>
-            <button
-              className="button"
-              onClick={handleNext}
-              disabled={currentPage === totalPage}
-            >
-              Next
-            </button>
-          </div>
+
+                  {services.map((item: servicesT, key) => {
+                    return (
+                      <tr key={key}>
+                        <td>{item.id}</td>
+                        <td>{item.description}</td>
+                        <td>{item.price}</td>
+                        <td>
+                          <p
+                            onClick={() =>
+                              handleUpdate({
+                                id: item.id,
+                                category: item.category,
+                                area: item.area,
+                                description: item.description,
+                                price: item.price,
+                                slot: item.slot,
+                              })
+                            }
+                            className="btn btn-primary"
+                          >
+                            Update
+                          </p>
+                        </td>
+                        <td>
+                          <p
+                            className="btn btn-danger"
+                            onClick={() => handleDelete(item.id)}
+                          >
+                            Delete
+                          </p>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              <div className="d-flex justify-content-center gap-3 mt-4">
+                <button
+                  className="button"
+                  onClick={handlePrev}
+                  disabled={currentPage == 1}
+                >
+                  Prev
+                </button>
+                <button
+                  className="button"
+                  onClick={handleNext}
+                  disabled={currentPage === totalPage}
+                >
+                  Next
+                </button>
+              </div>
+            </>
+          )}
         </>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "15% auto",
+          }}
+        >
+          {" "}
+          <Spinner />
+        </div>
       )}
     </div>
   );

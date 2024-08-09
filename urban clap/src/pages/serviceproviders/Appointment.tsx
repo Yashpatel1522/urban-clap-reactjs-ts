@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getData, patchData } from "../../services/axiosrequests";
 
 interface appoinmetT {

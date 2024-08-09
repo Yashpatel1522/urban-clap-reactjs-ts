@@ -1,6 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
-import ResponsiveAppBar from "../../layouts/header/ResponsiveAppBar";
-import Sidebar from "../../layouts/sidebar/Sidebar";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteData, getData } from "../../services/axiosrequests";
 import Swal from "sweetalert2";

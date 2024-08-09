@@ -2,7 +2,6 @@ import Chart from "./Chart";
 import { useSelector } from "react-redux";
 import AdminChart from "../admin/AdminChart";
 import userT from "../../types/userT";
-import Spinner from "../spiner";
 
 const Dashboard = () => {
   let reduxdata = useSelector(

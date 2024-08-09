@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getData, patchData } from "../../services/axiosrequests";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
