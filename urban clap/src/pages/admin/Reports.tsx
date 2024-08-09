@@ -170,7 +170,7 @@ const Reports = () => {
         </>
       ) : (
         <div className="text-danger text-center fs-3">
-          No Appointments Available
+          Data not found!
         </div>
       )}
     </div>

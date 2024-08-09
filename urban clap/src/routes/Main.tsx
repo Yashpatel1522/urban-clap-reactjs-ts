@@ -8,6 +8,7 @@ import servicesRoutes from "./Serviceprovider";
 import Admin from "./Admin";
 import "../pages/customers/showservices.css";
 import Customer from "./Customer";
+import "../pages/spiner.css";
 
 const Main = () => {
   const routes = useRoutes([

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { getData } from "../../services/axiosrequests";
-import debounce from "lodash.debounce";
+import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import "./showservices.css";
 import { Rating } from "@mui/material";

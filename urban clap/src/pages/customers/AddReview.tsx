@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import ResponsiveAppBar from "../../layouts/header/ResponsiveAppBar";
-import Sidebar from "../../layouts/sidebar/Sidebar";
+
 import { Form, Formik } from "formik";
 import { useLocation, useNavigate } from "react-router-dom";
 import TextField from "../../components/common/FormController/TextField";
 import { postData } from "../../services/axiosrequests";
-import { validationSchemaAddReview } from "../../Schema/addreview";
+// import { validationSchemaAddReview } from "../../Schema/addreview";
 import Swal from "sweetalert2";
 import { Box, Rating, Typography } from "@mui/material";
+import { validationSchemaAddReview } from "../../Schema/addreview";
 
 const initalValues = {
   rating: "",
@@ -15,11 +15,14 @@ const initalValues = {
   uploaded_images: [],
 };
 const AddReview = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0 as any);
   const location = useLocation();
   const navigate = useNavigate();
-  const handleSubmit = async (values, actions) => {
-    let storedata = JSON.parse(localStorage.getItem("creads"));
+  const handleSubmit = async (
+    values: { uploaded_images: []; comment: string; rating: any },
+    actions: any
+  ) => {
+    let storedata = JSON.parse(localStorage.getItem("creads") || "''");
     let config = {
       headers: {
         "Content-Type": " multipart/form-data",
@@ -56,7 +59,7 @@ const AddReview = () => {
           });
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       actions.setErrors(err.response.data.context.data);
       actions.setSubmitting(false);
     }
@@ -65,7 +68,7 @@ const AddReview = () => {
     <div>
       <div className="fs-4 text-center mb-5">Add Review</div>
       <Formik
-        initialValues={initalValues}
+        initialValues={initalValues as any}
         validationSchema={validationSchemaAddReview}
         onSubmit={handleSubmit}
       >
@@ -83,7 +86,7 @@ const AddReview = () => {
               type="file"
               className="form-control"
               multiple={true}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 let files = Array.from(e.target.files);
                 setFieldValue("uploaded_images", files);
               }}
@@ -99,7 +102,7 @@ const AddReview = () => {
               <Rating
                 name="rating"
                 value={value}
-                onChange={(event, newValue) => {
+                onChange={(event: any, newValue) => {
                   setValue(newValue);
                   setFieldValue("rating", event.target.value);
                 }}

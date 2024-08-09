@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { validationSchemaAddAppointment } from "../../Schema/addappointment";
 import SelectField from "../../components/common/FormController/SelectField";
 import TextField from "../../components/common/FormController/TextField";
 import { Form, Formik } from "formik";
 import { postData } from "../../services/axiosrequests";
 import Swal from "sweetalert2";
+import { validationSchemaAddAppointment } from "../../Schema/addappointment";
 
 const AddAppointment = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [value, setValue] = useState({});
+  const [value, setValue] = useState<{
+    area: [];
+    slot: [];
+    service: number;
+    work_date: string;
+  }>({} as { area: []; slot: []; service: number; work_date: string });
   useEffect(() => {
     setValue({
       service: location.state.service,
@@ -20,8 +25,8 @@ const AddAppointment = () => {
     });
   }, []);
 
-  const handleSubmit = async (values, actions) => {
-    let storedata = JSON.parse(localStorage.getItem("creads"));
+  const handleSubmit = async (values: { area: []; slot: [] }, actions: any) => {
+    let storedata = JSON.parse(localStorage.getItem("creads") || "''");
     let config = {
       headers: { Authorization: `Bearer ${storedata.access}` },
     };
@@ -43,7 +48,7 @@ const AddAppointment = () => {
           navigate("/all-services");
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       actions.setErrors(err.response.data.context.data);
       actions.setSubmitting(false);
     }

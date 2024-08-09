@@ -2,6 +2,7 @@ import Chart from "./Chart";
 import { useSelector } from "react-redux";
 import AdminChart from "../admin/AdminChart";
 import userT from "../../types/userT";
+import Spinner from "../spiner";
 
 const Dashboard = () => {
   let reduxdata = useSelector(
@@ -11,7 +12,17 @@ const Dashboard = () => {
     <div>
       {reduxdata?.pk == 1 ? (
         <AdminChart />
-      ) : reduxdata?.is_staff == true ? (
+      ) : // <div
+      //   style={{
+      //     display: "flex",
+      //     justifyContent: "center",
+      //     margin: "27% auto",
+      //   }}
+      // >
+      //   {" "}
+      //   <Spinner />
+      // </div>
+      reduxdata?.is_staff == true ? (
         <Chart />
       ) : (
         ""

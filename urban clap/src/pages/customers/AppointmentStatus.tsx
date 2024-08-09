@@ -1,25 +1,38 @@
 import React, { useCallback, useEffect, useState } from "react";
-import ResponsiveAppBar from "../../layouts/header/ResponsiveAppBar";
-import Sidebar from "../../layouts/sidebar/Sidebar";
-import debounce from "lodash.debounce";
 import { getData, patchData } from "../../services/axiosrequests";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import userT from "../../types/userT";
+import { debounce } from "lodash";
+
+interface appoinmetT {
+  id?: number;
+  service: { description: string; price?: number };
+  work_date?: string;
+  is_user_cancel?: boolean;
+  is_accept?: boolean;
+  is_cancel?: boolean;
+  is_service_completed?: boolean;
+}
 
 const AppointmentStatus = () => {
-  const [appointment, setApoointment] = useState([]);
+  const [appointment, setApoointment] = useState<[appoinmetT]>([{}] as [
+    appoinmetT
+  ]);
   const [inputValue, setInputValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [user, setUser] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
-  let userreduxdata = useSelector((state) => state.user);
+  let userreduxdata = useSelector(
+    (state: { user: { text: userT } }) => state.user
+  );
 
   const debouncedSearch = useCallback(
     debounce(async (page, query) => {
-      let storedata = JSON.parse(localStorage.getItem("creads"));
+      let storedata = JSON.parse(localStorage.getItem("creads") || "''");
       const response = await getData(
         `${
           import.meta.env.VITE_API_URL
@@ -40,7 +53,7 @@ const AppointmentStatus = () => {
     []
   );
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: any) => {
     setInputValue(event.target.value);
     setCurrentPage(1);
     debouncedSearch(currentPage, event.target.value);
@@ -66,7 +79,7 @@ const AppointmentStatus = () => {
     }
   };
 
-  const handleCancel = (id) => {
+  const handleCancel = (id: number) => {
     try {
       // update data base value is_cancel_user
       const swalWithBootstrapButtons = Swal.mixin({
@@ -96,8 +109,8 @@ const AppointmentStatus = () => {
                 return single;
               }
             });
-            setApoointment(cancelApoointmnet);
-            let storedata = JSON.parse(localStorage.getItem("creads"));
+            setApoointment(cancelApoointmnet as any);
+            let storedata = JSON.parse(localStorage.getItem("creads") || "''");
             let config = {
               headers: { Authorization: `Bearer ${storedata.access}` },
             };
@@ -148,7 +161,7 @@ const AppointmentStatus = () => {
           onChange={handleInputChange}
         />
       </div>
-      {appointment.length == 0 ? (
+      {(appointment.length as any) == 0 ? (
         <div className="fs-3 text-danger col-12 text-center mt-5">
           No Data Found
         </div>
@@ -161,11 +174,11 @@ const AppointmentStatus = () => {
               <div className="col-md-2">Service Price</div>
               <div className="col-md-4 text-center">Status</div>
             </div>
-            {appointment.map((app, key) => (
+            {appointment.map((app: appoinmetT, key) => (
               <div className="row mb-3" key={key}>
-                <div className="col-md-2">{app.service.description}</div>
+                <div className="col-md-2">{app?.service?.description}</div>
                 <div className="col-md-2">{app.work_date}</div>
-                <div className="col-md-2">{app.service.price}</div>
+                <div className="col-md-2">{app?.service?.price}</div>
 
                 {app.is_user_cancel == true ? (
                   <div className="col-md-4 text-center bg-dark text-white rounded-pill p-1">
@@ -196,7 +209,7 @@ const AppointmentStatus = () => {
                   <div
                     className="col-md-2 text-center btn btn-danger rounded-pill p-1"
                     onClick={() => {
-                      handleCancel(app.id);
+                      handleCancel(app.id as number);
                     }}
                   >
                     Cancel Request
