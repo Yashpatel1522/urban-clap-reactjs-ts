@@ -10,6 +10,7 @@ import "../pages/customers/showservices.css";
 import Customer from "./Customer";
 import "../pages/spiner.css";
 import React from "react";
+import NotFound from "../pages/Authentication/Notfound/NotFound";
 
 const Main = () => {
   const routes = useRoutes([
@@ -19,6 +20,10 @@ const Main = () => {
       children: [...servicesRoutes, ...Admin, ...Customer],
     },
     ...authroute,
+    {
+      path: "*",
+      element: <NotFound />,
+    },
   ]);
   return (
     <AuthProvider>
