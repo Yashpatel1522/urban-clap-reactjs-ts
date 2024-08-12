@@ -10,7 +10,10 @@ import Dashboard from "../pages/serviceproviders/Dashboard";
 import Showservices from "../pages/serviceproviders/Showservices";
 import Slot from "../pages/serviceproviders/Slot";
 
-const servicesRoutes = [
+const servicesRoutes: Array<{
+  path: string;
+  element: JSX.Element;
+}> = [
   {
     path: "dashboard",
     element: <ProtectedRoutes element={<Dashboard />} />,

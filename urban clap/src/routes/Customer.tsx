@@ -5,7 +5,10 @@ import AddAppointment from "../pages/customers/AddAppointment";
 import AppointmentStatus from "../pages/customers/AppointmentStatus";
 import AddReview from "../pages/customers/AddReview";
 
-const Customer = [
+const Customer: Array<{
+  path: string;
+  element: JSX.Element;
+}> = [
   {
     path: "/all-services",
     element: <ShowServices />,
