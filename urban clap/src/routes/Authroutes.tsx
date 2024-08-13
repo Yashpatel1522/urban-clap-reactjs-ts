@@ -1,3 +1,5 @@
+import CheckUserLogin from "../components/common/CheckUserLogin";
+import NotFound from "../pages/Authentication/Notfound/NotFound";
 import Forgetpassword from "../pages/Authentication/forgetpassword/Forgetpassword";
 import Resetpassword from "../pages/Authentication/forgetpassword/Resetpassword";
 import Login from "../pages/Authentication/login/Login";
@@ -10,7 +12,7 @@ export const authroute: Array<{
 }> = [
   {
     path: "/signin",
-    element: <Login />,
+    element: <CheckUserLogin element={<Login />} />,
   },
   {
     path: "/signup",
@@ -27,5 +29,9 @@ export const authroute: Array<{
   {
     path: "/logout",
     element: <Hanldelogout />,
+  },
+  {
+    path: "/unauthorised",
+    element: <NotFound />,
   },
 ];

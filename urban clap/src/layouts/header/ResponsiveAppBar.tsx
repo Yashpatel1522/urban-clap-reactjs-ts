@@ -26,7 +26,7 @@ interface settingsT {
 
 const settings: settingsT[] = [
   { name: "Profile", path: "/profile" },
-  { name: "Logout", path: "/signin" },
+  { name: "Logout", path: "/logout" },
 ];
 
 function ResponsiveAppBar() {

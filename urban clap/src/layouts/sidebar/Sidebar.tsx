@@ -9,7 +9,7 @@ interface navT {
 
 const Sidebar = () => {
   let setNavList: navT[] = [];
-  const user = JSON.parse(localStorage.getItem("creads") || "''");
+  const user = JSON.parse(localStorage.getItem("creads") || "[]");
   if (user.is_superuser) {
     setNavList = [
       {

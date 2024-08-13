@@ -4,6 +4,7 @@ import ShowReviews from "../pages/customers/ShowReviews";
 import AddAppointment from "../pages/customers/AddAppointment";
 import AppointmentStatus from "../pages/customers/AppointmentStatus";
 import AddReview from "../pages/customers/AddReview";
+import { ProtectedRoutes } from "../hooks/ProtectedRoutes";
 
 const Customer: Array<{
   path: string;
@@ -11,23 +12,48 @@ const Customer: Array<{
 }> = [
   {
     path: "/all-services",
-    element: <ShowServices />,
+    element: (
+      <ProtectedRoutes
+        element={<ShowServices />}
+        allowedRoles={["admin", "user"]}
+      />
+    ),
   },
   {
     path: "/book-appointment",
-    element: <AddAppointment />,
+    element: (
+      <ProtectedRoutes
+        element={<AddAppointment />}
+        allowedRoles={["admin", "user"]}
+      />
+    ),
   },
   {
     path: "/status",
-    element: <AppointmentStatus />,
+    element: (
+      <ProtectedRoutes
+        element={<AppointmentStatus />}
+        allowedRoles={["admin", "user"]}
+      />
+    ),
   },
   {
     path: "/reviews",
-    element: <ShowReviews />,
+    element: (
+      <ProtectedRoutes
+        element={<ShowReviews />}
+        allowedRoles={["admin", "user"]}
+      />
+    ),
   },
   {
     path: "/addreview",
-    element: <AddReview />,
+    element: (
+      <ProtectedRoutes
+        element={<AddReview />}
+        allowedRoles={["admin", "user"]}
+      />
+    ),
   },
 ];
 

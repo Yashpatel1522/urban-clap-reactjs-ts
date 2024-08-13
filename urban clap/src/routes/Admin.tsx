@@ -1,3 +1,4 @@
+import { ProtectedRoutes } from "../hooks/ProtectedRoutes";
 import Reports from "../pages/admin/Reports";
 import ServiceProviders from "../pages/admin/ServiceProviders";
 import ShowCustomers from "../pages/admin/ShowCustomers";
@@ -8,15 +9,22 @@ const Admin: Array<{
 }> = [
   {
     path: "/serviceproviders",
-    element: <ServiceProviders />,
+    element: (
+      <ProtectedRoutes
+        element={<ServiceProviders />}
+        allowedRoles={["admin"]}
+      />
+    ),
   },
   {
     path: "/customers",
-    element: <ShowCustomers />,
+    element: (
+      <ProtectedRoutes element={<ShowCustomers />} allowedRoles={["admin"]} />
+    ),
   },
   {
     path: "/reports",
-    element: <Reports />,
+    element: <ProtectedRoutes element={<Reports />} allowedRoles={["admin"]} />,
   },
 ];
 

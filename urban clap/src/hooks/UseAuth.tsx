@@ -8,26 +8,23 @@ export interface IAuth {
 const AuthContext = createContext<IAuth | null>(null);
 
 export const AuthProvider = (props: { children: JSX.Element }) => {
-  const user: string | null = localStorage.getItem("creads");
-
   const navigate = useNavigate();
 
-  const login = async (user: userT) => {
-    localStorage.setItem("creads", JSON.stringify(user));
+  const login = async (userd: userT) => {
+    localStorage.setItem("creads", JSON.stringify(userd));
 
-    if (user.is_staff) {
+    if (userd.is_staff || userd.is_superuser) {
       navigate("/dashboard");
-    } else if (user.is_superuser) {
-      navigate("/dashboard");
-    } else {
+    } else if (userd.is_superuser == false && userd.is_staff == false) {
       navigate("/all-services");
+    } else {
+      navigate("/signin");
     }
   };
 
   const value = useMemo(
     () => ({
       login,
-      user,
     }),
     []
   );

@@ -1,10 +1,31 @@
 import { Navigate } from "react-router-dom";
-import { IAuth, useAuth } from "./UseAuth";
 
-export const ProtectedRoutes = (props: { element: JSX.Element }) => {
-  const user: IAuth | null = useAuth();
-  if (!user) {
+export const ProtectedRoutes = (props: {
+  element: JSX.Element;
+  allowedRoles: Array<string>;
+}) => {
+  const user: Record<string, unknown> = JSON.parse(
+    localStorage.getItem("creads") ?? "[]"
+  );
+
+  let role: string = "";
+
+  if (user.refresh == undefined) {
     return <Navigate to="/signin" />;
+  }
+
+  if (user?.is_superuser) {
+    role = "admin";
+  } else if (user?.is_staff) {
+    role = "sp";
+  } else {
+    role = "user";
+  }
+
+  if (props.allowedRoles != undefined && role != "") {
+    if (!props.allowedRoles.includes(role)) {
+      return <Navigate to="/unauthorised" />;
+    }
   }
   return props.element;
 };

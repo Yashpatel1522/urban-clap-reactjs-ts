@@ -1,17 +1,21 @@
 import { Formik, Form, FormikHelpers } from "formik";
 import "./Login.css";
 import { Link } from "react-router-dom";
-// import TextField from "../../../components/common/FormController/TextField";
 import { logiValidationSchema } from "../../../Schema/login";
 import { errorT } from "../../../types/errorT";
 import useAxois from "../../../hooks/axois";
 import Toast from "../../../components/common/Toast";
 import TextField from "../../../components/common/FormController/TextField";
 import { IAuth, useAuth } from "../../../hooks/UseAuth";
+import { addUser } from "../../../reducer/profile";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const { login } = useAuth<IAuth | null>(null);
   const { axiosPost } = useAxois();
+  const { axoisGet } = useAxois();
+  const dispatch = useDispatch();
   const handleSubmit = async (
     values: {
       username: string;
@@ -21,10 +25,26 @@ const Login = () => {
   ) => {
     const errorTag = document.getElementById("error") as HTMLElement;
     try {
-      const response = await axiosPost("login/", values, false);
+      const responseLocal = await axiosPost("login/", values, false);
       errorTag.style.display = "none";
       actions.resetForm();
-      await login(response.context);
+
+      // store user data into redux
+      try {
+        const response = await axoisGet(`updateuser/`);
+        const userdata = response.context;
+        dispatch(
+          addUser({
+            ...userdata,
+            profile: { profile_photo: userdata.profile[0].profile_photo },
+            notification: [],
+          })
+        );
+      } catch (error) {
+        toast.error((error as Error).message);
+      }
+      // end
+      await login(responseLocal.context);
     } catch (err: unknown) {
       console.log(err);
       if (Object.keys((err as errorT).response.data.context)) {

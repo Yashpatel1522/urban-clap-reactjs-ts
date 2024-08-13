@@ -6,7 +6,7 @@ const useAxois = () => {
     const storedata = JSON.parse(localStorage.getItem("creads") || "[]");
     const header: Record<string, string> = {};
     if (storedata !== "") {
-      header["Authorization"] = `Bearer ${storedata.access}` as string;
+      header["Authorization"] = `Bearer ${storedata?.access}` as string;
     }
     return header;
   };

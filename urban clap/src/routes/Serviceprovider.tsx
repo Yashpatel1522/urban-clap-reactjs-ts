@@ -15,44 +15,79 @@ const servicesRoutes: Array<{
   element: JSX.Element;
 }> = [
   {
-    path: "dashboard",
-    element: <ProtectedRoutes element={<Dashboard />} />,
+    path: "/dashboard",
+    element: (
+      <ProtectedRoutes element={<Dashboard />} allowedRoles={["sp", "admin"]} />
+    ),
   },
   {
     path: "/addservices",
-    element: <Addservices />,
+    element: (
+      <ProtectedRoutes
+        element={<Addservices />}
+        allowedRoles={["sp", "admin"]}
+      />
+    ),
   },
   {
     path: "/services",
-    element: <Showservices />,
+    element: (
+      <ProtectedRoutes
+        element={<Showservices />}
+        allowedRoles={["sp", "admin", "user"]}
+      />
+    ),
   },
   {
     path: "/category",
-    element: <Category />,
+    element: (
+      <ProtectedRoutes element={<Category />} allowedRoles={["sp", "admin"]} />
+    ),
   },
   {
     path: "/addcategory",
-    element: <Addcategory />,
+    element: (
+      <ProtectedRoutes
+        element={<Addcategory />}
+        allowedRoles={["sp", "admin"]}
+      />
+    ),
   },
   {
     path: "/appointment",
-    element: <Appointment />,
+    element: (
+      <ProtectedRoutes
+        element={<Appointment />}
+        allowedRoles={["sp", "admin"]}
+      />
+    ),
   },
   {
     path: "/slot",
-    element: <Slot />,
+    element: (
+      <ProtectedRoutes element={<Slot />} allowedRoles={["sp", "admin"]} />
+    ),
   },
   {
     path: "/addslot",
-    element: <Addslot />,
+    element: (
+      <ProtectedRoutes element={<Addslot />} allowedRoles={["sp", "admin"]} />
+    ),
   },
   {
     path: "/notification",
-    element: <Notification />,
+    element: (
+      <ProtectedRoutes
+        element={<Notification />}
+        allowedRoles={["sp", "admin", "user"]}
+      />
+    ),
   },
   {
     path: "/profile",
-    element: <Profiles />,
+    element: (
+      <ProtectedRoutes element={<Profiles />} allowedRoles={["sp", "admin"]} />
+    ),
   },
 ];
 

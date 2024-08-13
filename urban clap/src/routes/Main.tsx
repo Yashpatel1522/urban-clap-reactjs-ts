@@ -16,7 +16,12 @@ const Main = () => {
   const routes = useRoutes([
     {
       path: "/",
-      element: <ProtectedRoutes element={<Layout />}></ProtectedRoutes>,
+      element: (
+        <ProtectedRoutes
+          element={<Layout />}
+          allowedRoles={["admin", "sp", "user"]}
+        ></ProtectedRoutes>
+      ),
       children: [...servicesRoutes, ...Admin, ...Customer],
     },
     ...authroute,

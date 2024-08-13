@@ -22,7 +22,7 @@ const NotFound = () => {
           </div>
           <div className="div text-center">
             <Link
-              to="/"
+              to="/signin"
               className="button text-center link-offset-2 link-underline link-underline-opacity-0"
             >
               Home
