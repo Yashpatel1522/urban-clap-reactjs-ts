@@ -1,12 +1,17 @@
 import axios, { ResponseType } from "axios";
 import { useCallback } from "react";
+import { useSelector } from "react-redux";
 
 const useAxois = () => {
+  const credentialsReduxData = useSelector(
+    (state: { credentials: { credentials: Record<string, unknown> } }) =>
+      state.credentials.credentials
+  );
   const generateHeader = (): Record<string, string> => {
-    const storedata = JSON.parse(localStorage.getItem("creads") || "[]");
     const header: Record<string, string> = {};
-    if (storedata !== "") {
-      header["Authorization"] = `Bearer ${storedata?.access}` as string;
+    if (credentialsReduxData !== undefined) {
+      header["Authorization"] =
+        `Bearer ${credentialsReduxData?.access}` as string;
     }
     return header;
   };

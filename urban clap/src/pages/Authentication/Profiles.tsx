@@ -12,7 +12,7 @@ import useAxois from "../../hooks/axois";
 
 const Profiles = () => {
   const userReduxData = useSelector(
-    (state: { user: { text: userT } }) => state.user
+    (state: { user: { user: userT } }) => state.user.user
   );
   const [imageUrl, setImageUrl] = useState("");
   const dispatch = useDispatch();
@@ -55,12 +55,11 @@ const Profiles = () => {
       }
     }
   };
-
   return (
     <div>
       <Formik
         enableReinitialize
-        initialValues={userReduxData?.text}
+        initialValues={userReduxData}
         validationSchema={validationschemaUpdateProfile}
         onSubmit={submitData}
       >
@@ -83,7 +82,7 @@ const Profiles = () => {
                   className="mb-4"
                 ></img>
                 <TextField
-                  style={{ width: "29%", marginLeft: "37%" }}
+                  style={{ width: "20%", marginLeft: "28%" }}
                   type="file"
                   label=""
                   name="profile_photo"

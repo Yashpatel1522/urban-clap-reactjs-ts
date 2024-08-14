@@ -19,7 +19,7 @@ const Showservices = () => {
   const [totalPage, setTotalPage] = useState(1);
   const [user, setUser] = useState("");
   const userreduxdata = useSelector(
-    (state: { user: { text: userT } }) => state.user
+    (state: { user: { user: userT } }) => state.user.user
   );
   const { axiosDelete, axoisGet } = useAxois();
 
@@ -134,7 +134,7 @@ const Showservices = () => {
   };
   return (
     <div>
-      {userreduxdata?.text.pk == 1 && (
+      {userreduxdata?.pk == 1 && (
         <div
           className="text-center btn btn-danger "
           onClick={() => {

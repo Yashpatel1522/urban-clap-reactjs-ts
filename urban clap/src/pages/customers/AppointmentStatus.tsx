@@ -29,7 +29,7 @@ const AppointmentStatus = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const userreduxdata = useSelector(
-    (state: { user: { text: userT } }) => state.user
+    (state: { user: { user: userT } }) => state.user
   );
   const { axoisGet, axiosPatch } = useAxois();
   const debouncedSearch = useCallback(
@@ -136,7 +136,7 @@ const AppointmentStatus = () => {
     <React.Fragment>
       <Toast></Toast>
       <div className="fs-4 text-center mb-5 mt-2">Appointment Status</div>
-      {userreduxdata?.text?.pk == 1 && (
+      {userreduxdata?.user?.pk == 1 && (
         <div
           className="text-center btn btn-danger "
           onClick={() => {

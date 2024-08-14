@@ -1,22 +1,24 @@
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 export const ProtectedRoutes = (props: {
   element: JSX.Element;
   allowedRoles: Array<string>;
 }) => {
-  const user: Record<string, unknown> = JSON.parse(
-    localStorage.getItem("creads") ?? "[]"
+  const credentialsReduxData = useSelector(
+    (state: { credentials: { credentials: Record<string, unknown> } }) =>
+      state.credentials.credentials
   );
 
   let role: string = "";
 
-  if (user.refresh == undefined) {
+  if (credentialsReduxData.refresh == undefined) {
     return <Navigate to="/signin" />;
   }
 
-  if (user?.is_superuser) {
+  if (credentialsReduxData?.is_superuser) {
     role = "admin";
-  } else if (user?.is_staff) {
+  } else if (credentialsReduxData?.is_staff) {
     role = "sp";
   } else {
     role = "user";

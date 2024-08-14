@@ -5,14 +5,13 @@ import userT from "../../types/userT";
 
 const Dashboard = () => {
   const reduxdata = useSelector(
-    (state: { user: { text: userT } }) => state.user?.text
+    (state: { user: { user: userT } }) => state.user?.user
   );
   return (
     <div>
       {reduxdata?.pk == 1 ? (
         <AdminChart />
-      ) : 
-      reduxdata?.is_staff == true ? (
+      ) : reduxdata?.is_staff == true ? (
         <Chart />
       ) : (
         ""

@@ -21,7 +21,7 @@ const Category = () => {
   const [totalPage, setTotalPage] = useState<number>(1);
   const navigate = useNavigate();
   const userdata = useSelector(
-    (state: { user: { text: userT } }) => state.user
+    (state: { user: { user: userT } }) => state.user.user
   );
   const { axiosDelete, axoisGet } = useAxois();
 
@@ -164,7 +164,7 @@ const Category = () => {
                         Update
                       </p>
                     </td>
-                    {userdata?.text?.pk == 1 && (
+                    {userdata?.pk == 1 && (
                       <td>
                         <p
                           className="btn btn-danger"

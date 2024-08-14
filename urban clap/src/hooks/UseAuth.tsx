@@ -1,18 +1,19 @@
 import { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import userT from "../types/userT";
-
+import { useDispatch } from "react-redux";
+import { addCredentials } from "../reducer/userdata";
 export interface IAuth {
   login: () => void;
 }
 const AuthContext = createContext<IAuth | null>(null);
 
 export const AuthProvider = (props: { children: JSX.Element }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const login = async (userd: userT) => {
-    localStorage.setItem("creads", JSON.stringify(userd));
-
+    dispatch(addCredentials(userd));
     if (userd.is_staff || userd.is_superuser) {
       navigate("/dashboard");
     } else if (userd.is_superuser == false && userd.is_staff == false) {

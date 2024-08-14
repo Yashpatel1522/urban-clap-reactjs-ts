@@ -1,5 +1,6 @@
 import "./sidebar.css";
 import Sidebarnavlist from "../../components/sidebar/Sidebarnavlist";
+import { useSelector } from "react-redux";
 
 interface navT {
   link: string;
@@ -9,8 +10,12 @@ interface navT {
 
 const Sidebar = () => {
   let setNavList: navT[] = [];
-  const user = JSON.parse(localStorage.getItem("creads") || "[]");
-  if (user.is_superuser) {
+  const credentialsReduxData = useSelector(
+    (state: { credentials: { credentials: Record<string, unknown> } }) =>
+      state.credentials.credentials
+  );
+
+  if (credentialsReduxData.is_superuser) {
     setNavList = [
       {
         link: "/dashboard",
@@ -48,7 +53,7 @@ const Sidebar = () => {
         icon_classes: "bi bi-clock-history fs-5 text-warning",
       },
     ];
-  } else if (user.is_staff) {
+  } else if (credentialsReduxData.is_staff) {
     setNavList = [
       {
         link: "/dashboard",

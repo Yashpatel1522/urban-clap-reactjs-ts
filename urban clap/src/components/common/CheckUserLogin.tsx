@@ -1,17 +1,21 @@
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const CheckUserLogin = (props: { element: JSX.Element }) => {
   const navigate = useNavigate();
-
-  const user: Record<string, unknown> = JSON.parse(
-    localStorage.getItem("creads") ?? "[]"
+  const credentialsReduxData = useSelector(
+    (state: { credentials: { credentials: Record<string, unknown> } }) =>
+      state.credentials.credentials
   );
 
   useEffect(() => {
-    if (user?.is_superuser || user?.is_staff) {
+    if (credentialsReduxData?.is_superuser || credentialsReduxData?.is_staff) {
       navigate("/dashboard");
-    } else if (user?.is_superuser == false && user?.is_staff == false) {
+    } else if (
+      credentialsReduxData?.is_superuser == false &&
+      credentialsReduxData?.is_staff == false
+    ) {
       navigate("/all-services");
     }
   }, []);

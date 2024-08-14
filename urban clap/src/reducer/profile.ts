@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
@@ -10,21 +10,19 @@ export const userSlice = createSlice({
 
   reducers: {
     addUser: (state: { user: unknown }, action) => {
-      const user = {
-        id: nanoid(),
-        text: action.payload,
-      };
-      state.user = user;
+      state.user = { ...action.payload };
     },
+
     updateUser: (state: { user: unknown }, action) => {
       (
-        state.user as { text: { profile: { profile_photo: unknown } } }
-      ).text.profile.profile_photo = action.payload;
+        state.user as { profile: { profile_photo: unknown } }
+      ).profile.profile_photo = action.payload;
     },
+
     updateNotification: (state: { user: unknown }, action) => {
-      (
-        state.user as { text: { notification: unknown[] } }
-      ).text.notification.push(action.payload);
+      (state.user as { notification: unknown[] }).notification.push(
+        action.payload
+      );
     },
   },
 });

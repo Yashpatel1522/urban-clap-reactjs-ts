@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 const Notification = () => {
   const [notifications, setNotifications] = useState<string[]>([]);
   const reduxdata = useSelector(
-    (state: { user: { text: { notification: [] } } }) =>
-      state.user?.text?.notification
+    (state: { user: { user: { notification: [] } } }) =>
+      state.user?.user?.notification
   );
   useEffect(() => {
     setNotifications(reduxdata);

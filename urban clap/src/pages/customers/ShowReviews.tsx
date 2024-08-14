@@ -13,7 +13,7 @@ const ShowReviews = () => {
   const { axoisGet } = useAxois();
 
   const userReduxData = useSelector(
-    (state: { user: { text: userT } }) => state.user?.text
+    (state: { user: { user: userT } }) => state.user?.user
   );
   const [review, setReview] = useState([]);
   const fetchData = async () => {

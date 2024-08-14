@@ -62,13 +62,12 @@ function ResponsiveAppBar() {
   }, []);
 
   const storedata = useSelector(
-    (state: { user: { text: userT } }) => state.user
+    (state: { user: { user: userT } }) => state.user
   );
-
   React.useEffect(() => {
-    if (storedata?.text?.pk != undefined) {
+    if (storedata?.user?.pk != undefined) {
       const socket = new WebSocket(
-        `ws://127.0.0.1:8000/ws/notifications/${storedata?.text?.pk}/`
+        `ws://127.0.0.1:8000/ws/notifications/${storedata?.user?.pk}/`
       );
 
       socket.onopen = () => {
@@ -90,7 +89,7 @@ function ResponsiveAppBar() {
 
       return () => socket.close();
     }
-  }, [storedata?.text?.pk]);
+  }, [storedata?.user?.pk]);
 
   const handleOpenNavMenu = (event: React.ChangeEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -154,7 +153,7 @@ function ResponsiveAppBar() {
                   color="inherit"
                 >
                   <Badge
-                    badgeContent={storedata?.text.notification?.length}
+                    badgeContent={storedata?.user?.notification?.length}
                     color="error"
                   >
                     <i
@@ -170,7 +169,7 @@ function ResponsiveAppBar() {
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     alt="Remy Sharp"
-                    src={storedata?.text.profile?.profile_photo}
+                    src={storedata?.user?.profile?.profile_photo}
                   />
                 </IconButton>
               </Tooltip>
