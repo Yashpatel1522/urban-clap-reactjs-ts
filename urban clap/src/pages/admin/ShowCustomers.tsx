@@ -96,7 +96,11 @@ const ShowCustomers = () => {
                       <div className="user-profile-inner">
                         <h4 className="text-balck">{single.username}</h4>
                         <img
-                          src={single?.profile[0]?.profile_photo}
+                          src={
+                            single?.profile[0] == undefined
+                              ? "./assets/images/avtar.avif"
+                              : single?.profile[0]?.profile_photo
+                          }
                           className="rounded-circle img-fluid"
                           alt="Not Found"
                           style={{

@@ -11,8 +11,7 @@ export const ProtectedRoutes = (props: {
   );
 
   let role: string = "";
-
-  if (credentialsReduxData.refresh == undefined) {
+  if (credentialsReduxData == null) {
     return <Navigate to="/signin" />;
   }
 
