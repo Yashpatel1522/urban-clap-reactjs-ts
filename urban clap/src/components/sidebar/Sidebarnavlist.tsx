@@ -1,19 +1,23 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 interface menuT {
   link: string;
   name: string;
   icon_classes?: string;
 }
 const Sidebarnavlist = (props: { item: menuT }) => {
+  const navigate = useNavigate();
   return (
-    <div className="div d-flex gap-5 p-2">
+    <div
+      style={{ cursor: "pointer" }}
+      className="div d-flex gap-5 p-2"
+      onClick={() => {
+        navigate(props.item.link);
+      }}
+    >
       <i className={props.item?.icon_classes}></i>
-      <Link
-        to={props.item.link}
-        className="mt-1 text-white link-offset-2 link-underline link-underline-opacity-0"
-      >
+      <div className="mt-1 text-white link-offset-2 link-underline link-underline-opacity-0">
         {props.item.name}
-      </Link>
+      </div>
     </div>
   );
 };

@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "web-vitals": "^2.1.4",
+    "mdb-react-ui-kit": "8.0.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^5.16.6",

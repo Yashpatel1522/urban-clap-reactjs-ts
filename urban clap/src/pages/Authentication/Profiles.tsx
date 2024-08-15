@@ -9,11 +9,24 @@ import userT from "../../types/userT";
 import { validationschemaUpdateProfile } from "../../Schema/updateprofile";
 import { errorT } from "../../types/errorT";
 import useAxois from "../../hooks/axois";
+import "./profile.css";
+import {
+  MDBCol,
+  MDBContainer,
+  MDBRow,
+  MDBCard,
+  MDBCardText,
+  MDBCardBody,
+  MDBCardImage,
+  MDBTypography,
+} from "mdb-react-ui-kit";
 
 const Profiles = () => {
   const userReduxData = useSelector(
     (state: { user: { user: userT } }) => state.user.user
   );
+  const inputRef = React.useRef<HTMLDivElement | null>(null);
+
   const [imageUrl, setImageUrl] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -55,8 +68,12 @@ const Profiles = () => {
       }
     }
   };
+  const pickImageHandler = () => {
+    inputRef.current?.click();
+  };
+
   return (
-    <div>
+    <section>
       <Formik
         enableReinitialize
         initialValues={userReduxData}
@@ -64,113 +81,207 @@ const Profiles = () => {
         onSubmit={submitData}
       >
         {(formik) => (
-          <Form className="form p-3">
-            <div
-              className="row shadow-lg p-1  bg-white rounded"
-              style={{ marginLeft: "10%" }}
-            >
-              <div className="col-md-5">
-                <img
-                  src={
-                    imageUrl == ""
-                      ? formik.values?.profile.profile_photo
-                      : imageUrl
-                  }
-                  alt="Image not found"
-                  height={"250px"}
-                  id="image"
-                  className="mb-4"
-                ></img>
-                <TextField
-                  style={{ width: "20%", marginLeft: "28%" }}
-                  type="file"
-                  label=""
-                  name="profile_photo"
-                  onChange={(e: unknown) => {
-                    formik.setFieldValue(
-                      "profile.profile_photo",
-                      (
-                        (e as React.ChangeEvent<HTMLInputElement>).currentTarget
-                          .files as FileList
-                      )[0]
-                    );
-                    setImageUrl(
-                      URL.createObjectURL(
-                        (
-                          (e as React.ChangeEvent<HTMLInputElement>)
-                            .currentTarget.files as FileList
-                        )[0]
-                      )
-                    );
+          <MDBContainer className="py-5">
+            <MDBRow className="">
+              <MDBCol lg="6" className="mb-4 mb-lg-0">
+                <MDBCard
+                  className="mb-3"
+                  style={{
+                    borderRadius: ".5rem",
+                    width: "134dvh",
+                    height: "80dvh",
                   }}
-                />
-              </div>
-              <div className="col-md-7">
-                <div className="fs-5 text-primary">
-                  User Profiles
-                  <div className="row mb-4 mt-2">
-                    <div className="col-9 mb-3">
-                      <TextField
-                        type="text"
-                        label="Firstname"
-                        name="first_name"
-                        placeholder="Lorem"
+                >
+                  <MDBRow className="g-0">
+                    <MDBCol
+                      md="4"
+                      className="gradient-custom text-center text-white"
+                      style={{
+                        borderTopLeftRadius: ".5rem",
+                        borderBottomLeftRadius: ".5rem",
+                        height: "80dvh",
+                      }}
+                    >
+                      <MDBCardImage
+                        src={
+                          imageUrl == ""
+                            ? formik.values?.profile.profile_photo
+                            : imageUrl
+                        }
+                        alt="Avatar"
+                        className="my-5"
+                        style={{
+                          width: "300px",
+                          borderTopLeftRadius: "20px",
+                          borderTopRightRadius: "20px",
+                          borderBottomLeftRadius: "20px",
+                          borderBottomRightRadius: "20px",
+                          height: "25dvh",
+                        }}
+                        fluid
                       />
-                    </div>
-                    <div className="col-9  mb-3">
-                      <TextField
-                        type="text"
-                        name="last_name"
-                        label="Lastname"
-                        placeholder="Ipsum"
+
+                      <MDBTypography tag="h1">
+                        {formik.values?.first_name} {formik.values?.last_name}
+                      </MDBTypography>
+                      <MDBCardText>Web Designer</MDBCardText>
+                      <input
+                        style={{
+                          width: "20%",
+                          marginLeft: "28%",
+                          display: "none",
+                        }}
+                        type="file"
+                        ref={(instance) => {
+                          inputRef.current = instance;
+                        }}
+                        id="profile_photo"
+                        name="profile_photo"
+                        onChange={(e: unknown) => {
+                          formik.setFieldValue(
+                            "profile.profile_photo",
+                            (
+                              (e as React.ChangeEvent<HTMLInputElement>)
+                                .currentTarget.files as FileList
+                            )[0]
+                          );
+                          setImageUrl(
+                            URL.createObjectURL(
+                              (
+                                (e as React.ChangeEvent<HTMLInputElement>)
+                                  .currentTarget.files as FileList
+                              )[0]
+                            )
+                          );
+                        }}
                       />
-                    </div>
-                    <div className="col-9  mb-3">
-                      <TextField
-                        type="email"
-                        name="email"
-                        label="Email"
-                        placeholder="loremipsum@gmail.com"
-                      />
-                    </div>
-                    <div className="col-9  mb-3">
-                      <TextField
-                        type="text"
-                        name="username"
-                        label="Username"
-                        placeholder="yashvahhani"
-                      />
-                    </div>
-                    <div className="col-9  mb-3">
-                      <TextField
-                        type="text"
-                        name="contact"
-                        label="Contect"
-                        placeholder="loremipsum@gmail.com"
-                      />
-                    </div>
-                    <div className="col-9  mb-3">
-                      <TextField
-                        type="text"
-                        name="address"
-                        label="Address"
-                        placeholder="Bhavanagar...."
-                      />
-                    </div>
-                    <div className="col-4">
-                      <button type="submit" className="button">
-                        Update
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Form>
+                      <div>
+                        <i
+                          onClick={() => {
+                            pickImageHandler();
+                          }}
+                          className="bi bi-pencil-square fs-3"
+                          style={{ cursor: "pointer" }}
+                          onChange={(e: unknown) => {
+                            formik.setFieldValue(
+                              "profile.profile_photo",
+                              (
+                                (e as React.ChangeEvent<HTMLInputElement>)
+                                  .currentTarget.files as FileList
+                              )[0]
+                            );
+                            setImageUrl(
+                              URL.createObjectURL(
+                                (
+                                  (e as React.ChangeEvent<HTMLInputElement>)
+                                    .currentTarget.files as FileList
+                                )[0]
+                              )
+                            );
+                          }}
+                        ></i>
+                      </div>
+                    </MDBCol>
+                    <MDBCol md="8">
+                      <MDBCardBody className="p-4">
+                        <MDBTypography tag="h6">Information</MDBTypography>
+                        <hr className="mt-0 mb-4" />
+                        <MDBRow className="pt-1">
+                          <Form className="form p-3">
+                            <div className="row ">
+                              <div className="col-md-5"></div>
+                              <MDBRow className="pt-1">
+                                <MDBCol size="6" className="mb-3">
+                                  <MDBTypography tag="h6">Email</MDBTypography>
+                                  <MDBCardText className="text-muted">
+                                    <TextField
+                                      type="email"
+                                      name="email"
+                                      placeholder="loremipsum@gmail.com"
+                                    />
+                                  </MDBCardText>
+                                </MDBCol>
+                                <MDBCol size="6" className="mb-3">
+                                  <MDBTypography tag="h6">Phone</MDBTypography>
+                                  <MDBCardText className="text-muted">
+                                    <TextField
+                                      type="text"
+                                      name="contact"
+                                      placeholder="loremipsum@gmail.com"
+                                    />
+                                  </MDBCardText>
+                                </MDBCol>
+                                <MDBCol size="6" className="mb-3">
+                                  <MDBTypography tag="h6">
+                                    First Name
+                                  </MDBTypography>
+                                  <MDBCardText className="text-muted">
+                                    <TextField
+                                      type="text"
+                                      name="first_name"
+                                      placeholder="Lorem"
+                                    />
+                                  </MDBCardText>
+                                </MDBCol>
+                                <MDBCol size="6" className="mb-3">
+                                  <MDBTypography tag="h6">
+                                    Last Name
+                                  </MDBTypography>
+                                  <MDBCardText className="text-muted">
+                                    <TextField
+                                      type="text"
+                                      name="last_name"
+                                      placeholder="Ipsum"
+                                    />
+                                  </MDBCardText>
+                                </MDBCol>
+                                <MDBCol size="6" className="mb-3">
+                                  <MDBTypography tag="h6">
+                                    Username
+                                  </MDBTypography>
+                                  <MDBCardText className="text-muted">
+                                    <TextField
+                                      type="text"
+                                      name="username"
+                                      placeholder="yashvahhani"
+                                    />
+                                  </MDBCardText>
+                                </MDBCol>
+                                <MDBCol size="6" className="mb-3">
+                                  <MDBTypography tag="h6">
+                                    Address
+                                  </MDBTypography>
+                                  <MDBCardText className="text-muted">
+                                    <TextField
+                                      type="text"
+                                      name="address"
+                                      placeholder="Bhavanagar...."
+                                    />
+                                  </MDBCardText>
+                                </MDBCol>
+                                <MDBCol size="12" className="mb-3">
+                                  <button
+                                    type="submit"
+                                    className="button"
+                                    style={{ backgroundColor: "#516395" }}
+                                  >
+                                    Update
+                                  </button>
+                                </MDBCol>
+                              </MDBRow>
+                            </div>
+                          </Form>
+                        </MDBRow>
+                      </MDBCardBody>
+                    </MDBCol>
+                  </MDBRow>
+                </MDBCard>
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
         )}
       </Formik>
-    </div>
+    </section>
   );
 };
-
 export default Profiles;
