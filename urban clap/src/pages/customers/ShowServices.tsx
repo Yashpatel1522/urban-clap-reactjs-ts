@@ -3,10 +3,10 @@ import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import "./showservices.css";
 import { Rating } from "@mui/material";
-import Spinner from "../spiner";
 import SerachBox from "../../components/common/FormController/SerachBox";
 import useAxois from "../../hooks/axois";
 import { toast } from "react-toastify";
+import Loading from "../Loading";
 
 const ShowServices = () => {
   const [allServices, setAllServices] = useState([]);
@@ -223,7 +223,7 @@ const ShowServices = () => {
           }}
         >
           {" "}
-          <Spinner />
+          <Loading />
         </div>
       )}
     </div>

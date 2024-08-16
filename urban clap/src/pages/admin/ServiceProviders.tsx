@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
-import Spinner from "../spiner";
-// import SerachBox from "../../components/common/FormController/SerachBox";
 import useAxois from "../../hooks/axois";
 import { toast } from "react-toastify";
 import SerachBox from "../../components/common/FormController/SerachBox";
 import Toast from "../../components/common/Toast";
-// import Toast from "../../components/common/Toast";
+import Loading from "../Loading";
 
 export interface profileT {
   pk: number;
@@ -149,7 +147,7 @@ const ServiceProviders = () => {
           )}
         </React.Fragment>
       ) : (
-        <Spinner />
+        <Loading />
       )}
       <Toast />
     </div>

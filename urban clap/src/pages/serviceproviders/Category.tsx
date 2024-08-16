@@ -4,9 +4,9 @@ import { debounce } from "lodash";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import userT from "../../types/userT";
-import Spinner from "../spiner";
 import SerachBox from "../../components/common/FormController/SerachBox";
 import useAxois from "../../hooks/axois";
+import Loading from "../Loading";
 
 type categoryT = {
   id: number;
@@ -205,7 +205,7 @@ const Category = () => {
           }}
         >
           {" "}
-          <Spinner />
+          <Loading />
         </div>
       )}
     </div>

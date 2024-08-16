@@ -6,10 +6,10 @@ import { debounce } from "lodash";
 import { useSelector } from "react-redux";
 import userT from "../../types/userT";
 import servicesT from "../../types/showservices";
-import Spinner from "../spiner";
 import SerachBox from "../../components/common/FormController/SerachBox";
 import React from "react";
 import useAxois from "../../hooks/axois";
+import Loading from "../Loading";
 
 const Showservices = () => {
   const [services, setServices] = useState<Array<servicesT>>([]);
@@ -245,7 +245,7 @@ const Showservices = () => {
           )}
         </React.Fragment>
       ) : (
-        <Spinner />
+        <Loading />
       )}
     </div>
   );

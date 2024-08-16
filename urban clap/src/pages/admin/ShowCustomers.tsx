@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { profileT } from "./ServiceProviders";
-import Spinner from "../spiner";
 import { toast } from "react-toastify";
 import useAxois from "../../hooks/axois";
 import SerachBox from "../../components/common/FormController/SerachBox";
+import Loading from "../Loading";
 
 const ShowCustomers = () => {
   const [customer, setCustomer] = useState<profileT[]>([]);
@@ -156,7 +156,7 @@ const ShowCustomers = () => {
           }}
         >
           {" "}
-          <Spinner />
+          <Loading />
         </div>
       )}
     </div>

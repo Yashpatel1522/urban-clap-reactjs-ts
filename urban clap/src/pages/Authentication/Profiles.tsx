@@ -124,7 +124,6 @@ const Profiles = () => {
                       <MDBTypography tag="h1">
                         {formik.values?.first_name} {formik.values?.last_name}
                       </MDBTypography>
-                      <MDBCardText>Web Designer</MDBCardText>
                       <input
                         style={{
                           width: "20%",
