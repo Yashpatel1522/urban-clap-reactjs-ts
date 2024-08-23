@@ -8,8 +8,8 @@ const Sidebarnavlist = (props: { item: menuT }) => {
   const navigate = useNavigate();
   return (
     <div
-      style={{ cursor: "pointer" }}
-      className="div d-flex gap-5 p-2"
+      style={{ cursor: "pointer"}}
+      className="div d-flex gap-4 p-2"
       onClick={() => {
         navigate(props.item.link);
       }}

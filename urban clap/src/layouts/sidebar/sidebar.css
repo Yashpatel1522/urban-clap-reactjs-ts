@@ -2,15 +2,4 @@
   background-color: darkslategray;
   border-radius: 5px;
 }
-.main-sidebar {
-  position: fixed;
-  width: 18%;
-  height: 400px;
-  background: #000;
-  border-top-right-radius: 50px;
-  height: 100dvh;
-  z-index: 2;
-}
-.header-for-page {
-  width: 100%;
-}
+
