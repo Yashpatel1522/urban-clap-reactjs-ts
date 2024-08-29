@@ -86,7 +86,7 @@ const servicesRoutes: Array<{
   {
     path: "/profile",
     element: (
-      <ProtectedRoutes element={<Profiles />} allowedRoles={["sp", "admin"]} />
+      <ProtectedRoutes element={<Profiles />} allowedRoles={["sp", "admin","user"]} />
     ),
   },
 ];

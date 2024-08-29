@@ -9,6 +9,7 @@ import useAxois from "../../hooks/axois";
 import { toast } from "react-toastify";
 import Toast from "../../components/common/Toast";
 import React from "react";
+import CustomMap from "./CustomMap";
 
 type appoimentT = {
   id?: number;
@@ -42,8 +43,8 @@ const AppointmentStatus = () => {
             user == "" && location.state?.id == undefined
               ? ""
               : user == ""
-              ? location.state?.id
-              : user,
+                ? location.state?.id
+                : user,
         });
         setApoointment(response.context?.results);
         setTotalPage(Math.ceil(response.context.count / 2));
@@ -197,8 +198,8 @@ const AppointmentStatus = () => {
                   </div>
                 )}
                 {app.is_cancel != true &&
-                app.is_user_cancel != true &&
-                app.is_service_completed != true ? (
+                  app.is_user_cancel != true &&
+                  app.is_service_completed != true ? (
                   <div
                     className="col-md-2 text-center btn btn-danger rounded-pill p-1"
                     onClick={() => {
@@ -231,6 +232,7 @@ const AppointmentStatus = () => {
           </div>
         </React.Fragment>
       )}
+      <CustomMap />
     </React.Fragment>
   );
 };

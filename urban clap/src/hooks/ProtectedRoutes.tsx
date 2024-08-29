@@ -11,16 +11,16 @@ export const ProtectedRoutes = (props: {
   );
 
   let role: string = "";
-  if (credentialsReduxData == null) {
-    return <Navigate to="/signin" />;
-  }
-
-  if (credentialsReduxData?.is_superuser) {
-    role = "admin";
-  } else if (credentialsReduxData?.is_staff) {
-    role = "sp";
+  if (credentialsReduxData) {
+    if (credentialsReduxData?.is_superuser) {
+      role = "admin";
+    } else if (credentialsReduxData?.is_staff) {
+      role = "sp";
+    } else {
+      role = "user";
+    }
   } else {
-    role = "user";
+    return <Navigate to="/signin" />;
   }
 
   if (props.allowedRoles != undefined && role != "") {

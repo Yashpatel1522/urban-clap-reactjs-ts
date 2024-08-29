@@ -10,15 +10,16 @@ import "../pages/customers/showservices.css";
 import Customer from "./Customer";
 import React from "react";
 import NotFound from "../pages/Authentication/Notfound/NotFound";
+import { ProtectedRoutesMain } from "../hooks/ProtectedRoutesMain";
 const Main = () => {
   const routes = useRoutes([
     {
       path: "/",
       element: (
-        <ProtectedRoutes
+        <ProtectedRoutesMain
           element={<Layout />}
           allowedRoles={["admin", "sp", "user"]}
-        ></ProtectedRoutes>
+        ></ProtectedRoutesMain>
       ),
       children: [...servicesRoutes, ...Admin, ...Customer],
     },

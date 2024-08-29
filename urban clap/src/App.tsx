@@ -5,6 +5,7 @@ import Main from "./routes/Main";
 import { Provider } from "react-redux";
 import { Store, persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import "leaflet/dist/leaflet.css"
 
 function App() {
   return (
