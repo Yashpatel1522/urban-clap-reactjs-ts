@@ -20,7 +20,14 @@ type appoimentT = {
   is_cancel?: boolean;
   is_service_completed?: boolean;
 };
-
+interface settingsT {
+  name: string;
+  path: string;
+}
+const settings: settingsT[] = [
+  { name: "Profile", path: "/profile" },
+  { name: "Logout", path: "/logout" },
+];
 const AppointmentStatus = () => {
   const [appointment, setApoointment] = useState<Array<appoimentT>>([]);
   const [inputValue, setInputValue] = useState<string>("");

@@ -78,3 +78,64 @@
   justify-content: center;
   margin-top: 20px;
 }
+
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:700");
+
+
+
+.ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+li {
+  margin: 0 2rem;
+}
+
+.a {
+  display: block;
+  position: relative;
+  padding: 0.2em 0;
+}
+
+.a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0.2em;
+  background-color:darkslategray;
+  opacity: 0;
+  transition: opacity 300ms, transform 300ms;
+}
+
+
+
+/* Slide in */
+.a {
+  overflow: hidden;
+}
+
+.a::after {
+  opacity :1;
+  transform: translate3d(-100%, 0, 0);
+}
+
+ .a:hover::after,
+ .a:focus::after{
+  transform: translate3d(0, 0, 0);
+}
+

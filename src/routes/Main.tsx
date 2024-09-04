@@ -21,9 +21,10 @@ const Main = () => {
           allowedRoles={["admin", "sp", "user"]}
         ></ProtectedRoutesMain>
       ),
-      children: [...servicesRoutes, ...Admin, ...Customer],
+      children: [...servicesRoutes, ...Admin],
     },
     ...authroute,
+    ...Customer,
     {
       path: "*",
       element: <NotFound />,
